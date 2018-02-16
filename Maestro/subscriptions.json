@@ -569,14 +569,39 @@
           "Arguments": [
             "-CleanupDocker",
             "-UpdateDependenciesParams '",
-              "--user dotnet-maestro-bot",
-              "--email dotnet-maestro-bot@microsoft.com",
-              "--password `$(`$Secrets[`'DotNetMaestroBotGitHubToken`'])",
-              "https://raw.githubusercontent.com/dotnet/versions/master/build-info/dotnet/product/cli/release/2.1/build.xml",
+            "--user dotnet-maestro-bot",
+            "--email dotnet-maestro-bot@microsoft.com",
+            "--password `$(`$Secrets[`'DotNetMaestroBotGitHubToken`'])",
+            "https://raw.githubusercontent.com/dotnet/versions/master/build-info/dotnet/product/cli/release/2.1/build.xml",
             "'"
           ]
         },
         "vsoSourceBranch": "nightly"
+      }
+    },
+    // Update dependencies in the aspnetcore repo's dev branch
+    {
+      "triggerPaths": [
+        "https://github.com/dotnet/versions/blob/master/build-info/dotnet/product/cli/master/packages.semaphore"
+      ],
+      "action": "aspnet-dependency-update",
+      "delay": "00:05:00",
+      "actionArguments": {
+        "vsoSourceBranch": "master",
+        "vsoBuildParameters": {
+          "ScriptFileName": "scripts\\UpdateDependencies.ps1",
+          "Arguments": [
+            "-BuildXml",
+            "https://raw.githubusercontent.com/dotnet/versions/master/build-info/dotnet/product/cli/master/build.xml",
+            "-GitAuthorName",
+            "dotnet-maestro-bot",
+            "-GitAuthorEmail",
+            "dotnet-maestro-bot@microsoft.com",
+            "-TargetBranch",
+            "dev",
+            "-Force"
+          ]
+        }
       }
     },
     // Trigger official build of the dotnet-docker repo's nightly branch when a base image is changed
