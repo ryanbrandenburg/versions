@@ -672,7 +672,8 @@
     // Update dependencies in the aspnet/aspnet-docker repo's dev branch
     {
       "triggerPaths": [
-        "https://github.com/dotnet/versions/blob/master/build-info/dotnet/product/cli/release/2.1/packages+installers.semaphore"
+        "https://github.com/dotnet/versions/blob/master/build-info/dotnet/corefx/master/Latest.txt",
+        "https://github.com/dotnet/versions/blob/master/build-info/dotnet/cli/master/Latest.txt"
       ],
       "action": "aspnet-docker-general",
       "delay": "00:05:00",
